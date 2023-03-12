@@ -4,7 +4,7 @@
 #include <string>
 using namespace std;
 
-void Record::insert() {
+void Record::insertRecord() {
     fstream file;
     file.open("data.txt", ios::app);
     cout << "Enter url:" << endl;
@@ -26,4 +26,36 @@ int Record::trackId() {
     if (numLines == 0)
         return 0;
     return numLines / 4;
+}
+
+void Record::removeRecord(int id) {
+    ifstream inputFile("data.txt");
+    ofstream outputFile("temp.txt");
+    string line;
+
+    bool removed = false;
+   
+    while (getline(inputFile,line)) {
+        if (line == to_string(id)) {
+            removed = true;
+            for (int i = 0; i < 4; i++) {
+                if (!getline(inputFile, line)) {
+                    break;
+                }
+            } 
+        }
+        outputFile <<line <<endl;
+    }
+    inputFile.close();
+    outputFile.close();
+
+    if (!removed) {
+        cout << "ID not found." << endl;
+        remove("temp.txt");
+    }
+    else {
+        remove("data.txt");
+        rename("temp.txt", "data.txt");
+
+    }
 }

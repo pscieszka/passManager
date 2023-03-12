@@ -17,5 +17,5 @@ void List::listing() {
 
 void List::printMenu() {
 	cout << "Menu" << endl;
-	cout << "1.List account.\n2.Add account\n3.Exit\nInsert number: ";
+	cout << "1.List account.\n2.Add account\n3.Remove\n4.Exit\nInsert number: ";
 }

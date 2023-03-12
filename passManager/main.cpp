@@ -5,6 +5,7 @@
 
 using namespace std;
 
+
 int main()
 {
     List menu;
@@ -17,9 +18,14 @@ int main()
 		break;
 	case 2:
 		record.id = record.trackId();
-		record.insert();
+		record.insertRecord();
 		break;
 	case 3:
+		cout << "input id: ";
+		cin >> record.id;
+		record.removeRecord(record.id);
+		break;
+	case 4:
 		exit(0);
 		break;
 	default:

@@ -6,9 +6,12 @@ private:
 public:
     std::string url;
     std::string login;
-    void insert();
+
     int id;
     int trackId();
+    void insertRecord();
+    void removeRecord(int id);
+    
 
 };
 
