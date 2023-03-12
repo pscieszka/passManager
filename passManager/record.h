@@ -1,16 +1,14 @@
 class Record
 {
 private:
-
+    std::string password;
+ 
+public:
     std::string url;
     std::string login;
-    std::string password;
-    int id;
-
-    int trackId();
-
-public:
     void insert();
+    int id;
+    int trackId();
 
 };
 

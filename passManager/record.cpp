@@ -13,7 +13,7 @@ void Record::insert() {
     cin >> login;
     cout << "Enter password:" << endl;
     cin >> password;
-    file << id << endl << url << endl << login << endl << password << endl;
+    file << id << endl << url << endl << login << endl << password << endl; // ignorowanie spacji
     file.close();
 }
 
