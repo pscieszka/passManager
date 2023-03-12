@@ -8,14 +8,46 @@ using namespace std;
 void List::listing() {
     ifstream file("data.txt");
     string text;
-    while (!file.eof()) {
-        getline(file, text);
+    
+    cout << "\n";
+    while (getline(file, text)){
+        
         cout << text << endl;
+      
     }
+    cout << "\n\n";
     file.close();
 }
 
 void List::printMenu() {
-	cout << "Menu" << endl;
-	cout << "1.List account.\n2.Add account\n3.Remove\n4.Exit\nInsert number: ";
+	cout << "\t\t\t\t\t\tMenu\n\n" << endl;
+	cout << "\t\t\t\t\t\t1.List account\n\t\t\t\t\t\t2.Add account\n\t\t\t\t\t\t3.Remove\n\t\t\t\t\t\t4.Exit\n\t\t\t\t\t\tInsert number: ";
+}
+
+void List::fixIds() {
+    ifstream file("data.txt");
+    ofstream fixedFile("temp.txt");
+    int i = -1;
+    string line;
+    
+    while (getline(file, line) ) {
+        i++;
+        if (line == "\n") {
+            break;
+        }
+        if (i%4==0 && i!=0) {
+            fixedFile << i/4 << endl;
+        }
+        else {
+            fixedFile << line << endl;
+        }
+        
+    }
+    file.close();
+    fixedFile.close();
+
+    remove("data.txt");
+    rename("temp.txt", "data.txt");
+    remove("temp.txt");
+ 
 }

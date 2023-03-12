@@ -34,7 +34,7 @@ void Record::removeRecord(int id) {
     string line;
 
     bool removed = false;
-   
+ 
     while (getline(inputFile,line)) {
         if (line == to_string(id)) {
             removed = true;
@@ -48,7 +48,6 @@ void Record::removeRecord(int id) {
     }
     inputFile.close();
     outputFile.close();
-
     if (!removed) {
         cout << "ID not found." << endl;
         remove("temp.txt");
