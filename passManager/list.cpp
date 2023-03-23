@@ -3,19 +3,75 @@
 #include "record.h"
 #include <fstream>
 #include <string>
+#include <vector>
 using namespace std;
 
-void List::listing() {
+void List::listing(int listSize) {
     ifstream file("data.txt");
     string text;
     
     cout << "\n";
-    while (getline(file, text)){
-        
-        cout << "\t\t\t\t\t\t"<< text <<"\n";
-      
+    /*for (int i = 1; i < listSize * 4;i += 4) {
+        getline(file, text);
+        cout << text << "\t\t\t";
+        getline(file, text);
+        getline(file, text);
+        getline(file, text);
     }
+    cout << "\n";
+    file.close();
+    file.open("data.txt");
+    for (int i = 1; i < listSize * 4;i += 4) {
+        getline(file, text);
+        getline(file, text);
+        cout << text << "\t\t\t";
+        getline(file, text);
+        getline(file, text);
+    }
+    file.close();
+    file.open("data.txt");
+    cout << "\n";
+    for (int i = 1; i < listSize * 4;i += 4) {
+        getline(file, text);
+        getline(file, text);
+        getline(file, text);
+        cout << text << "\t\t\t";
+        getline(file, text);
+    }
+    file.close();
+    file.open("data.txt");
+    cout << "\n";
+    for (int i = 1; i < listSize * 4;i += 4) {
+        getline(file, text);
+        getline(file, text);
+        getline(file, text);
+        getline(file, text);
+        cout << text << "\t\t\t";
+    }
+    file.close();
+    file.open("data.txt");
+    cout << "\n";
+ 
     cout << "\n\n";
+    file.close();*/
+    std::vector<std::string> lines;
+    for (int i = 0; i < 4; i++) {
+        file.clear();
+        file.seekg(0, std::ios::beg);
+        for (int j = 1; j <= listSize; j++) {
+            for (int k = 0; k < 4; k++) {
+                getline(file, text);
+                if (k == i) {
+                    lines.push_back(text);
+                }
+            }
+        }
+        for (int j = 0; j < lines.size(); j++) {
+            std::cout << lines[j] << "\t\t\t";
+        }
+        std::cout << std::endl;
+        lines.clear();
+    }
     file.close();
 }
 

@@ -15,7 +15,8 @@ int main()
 		cin >> menu.input;
 		switch (menu.input) {
 		case 1:
-			menu.listing();
+			menu.listSize = record.trackId();
+			menu.listing(menu.listSize);
 			break;
 		case 2:
 			record.id = record.trackId();
