@@ -12,7 +12,7 @@ void List::listing() {
     cout << "\n";
     while (getline(file, text)){
         
-        cout << text << endl;
+        cout << "\t\t\t\t\t\t"<< text <<"\n";
       
     }
     cout << "\n\n";
@@ -20,7 +20,7 @@ void List::listing() {
 }
 
 void List::printMenu() {
-	cout << "\t\t\t\t\t\tMenu\n\n" << endl;
+	cout << "\t\t\t\t\t\tMenu\n\n";
 	cout << "\t\t\t\t\t\t1.List account\n\t\t\t\t\t\t2.Add account\n\t\t\t\t\t\t3.Remove\n\t\t\t\t\t\t4.Exit\n\t\t\t\t\t\tInsert number: ";
 }
 
@@ -35,7 +35,7 @@ void List::fixIds() {
         if (line == "\n") {
             break;
         }
-        if (i%4==0 && i!=0) {
+        else if (i%4==0 && i!=0) {
             fixedFile << i/4 << endl;
         }
         else {

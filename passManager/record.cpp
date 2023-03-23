@@ -44,7 +44,8 @@ void Record::removeRecord(int id) {
                 }
             } 
         }
-        outputFile <<line <<endl;
+        if (outputFile.tellp() != 0 || line != "")
+            outputFile <<line <<endl;
     }
     inputFile.close();
     outputFile.close();
@@ -55,6 +56,7 @@ void Record::removeRecord(int id) {
     else {
         remove("data.txt");
         rename("temp.txt", "data.txt");
+        
 
     }
 }

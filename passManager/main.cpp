@@ -32,6 +32,7 @@ int main()
 			break;
 		default:
 			cout << "Wrong number. Try again.\nInsert number: ";
+			break;
 		}
 	}
     return 0;
