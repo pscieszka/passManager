@@ -11,68 +11,15 @@ void List::listing(int listSize) {
     string text;
     
     cout << "\n";
-    /*for (int i = 1; i < listSize * 4;i += 4) {
+    for (int i = 1; i <= listSize*4; i++) {
+        if (i % 4 == 1) {
+            cout << "\n\n";
+        }
         getline(file, text);
-        cout << text << "\t\t\t";
-        getline(file, text);
-        getline(file, text);
-        getline(file, text);
-    }
-    cout << "\n";
-    file.close();
-    file.open("data.txt");
-    for (int i = 1; i < listSize * 4;i += 4) {
-        getline(file, text);
-        getline(file, text);
-        cout << text << "\t\t\t";
-        getline(file, text);
-        getline(file, text);
+        cout << text<<"\n";
     }
     file.close();
-    file.open("data.txt");
-    cout << "\n";
-    for (int i = 1; i < listSize * 4;i += 4) {
-        getline(file, text);
-        getline(file, text);
-        getline(file, text);
-        cout << text << "\t\t\t";
-        getline(file, text);
-    }
-    file.close();
-    file.open("data.txt");
-    cout << "\n";
-    for (int i = 1; i < listSize * 4;i += 4) {
-        getline(file, text);
-        getline(file, text);
-        getline(file, text);
-        getline(file, text);
-        cout << text << "\t\t\t";
-    }
-    file.close();
-    file.open("data.txt");
-    cout << "\n";
- 
     cout << "\n\n";
-    file.close();*/
-    std::vector<std::string> lines;
-    for (int i = 0; i < 4; i++) {
-        file.clear();
-        file.seekg(0, std::ios::beg);
-        for (int j = 1; j <= listSize; j++) {
-            for (int k = 0; k < 4; k++) {
-                getline(file, text);
-                if (k == i) {
-                    lines.push_back(text);
-                }
-            }
-        }
-        for (int j = 0; j < lines.size(); j++) {
-            std::cout << lines[j] << "\t\t\t";
-        }
-        std::cout << std::endl;
-        lines.clear();
-    }
-    file.close();
 }
 
 void List::printMenu() {
@@ -91,12 +38,13 @@ void List::fixIds() {
         if (line == "\n") {
             break;
         }
-        else if (i%4==0 && i!=0) {
+        else if (i%4==0) {
             fixedFile << i/4 << endl;
         }
         else {
             fixedFile << line << endl;
         }
+        
         
     }
     file.close();
@@ -105,5 +53,4 @@ void List::fixIds() {
     remove("data.txt");
     rename("temp.txt", "data.txt");
     remove("temp.txt");
- 
 }

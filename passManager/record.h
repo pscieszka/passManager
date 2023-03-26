@@ -2,11 +2,11 @@ class Record
 {
 private:
     std::string password;
- 
-public:
     std::string url;
     std::string login;
-
+ 
+public:
+    
     int id;
     int trackId();
     void insertRecord();

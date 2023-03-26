@@ -14,6 +14,7 @@ int main()
 		menu.printMenu();
 		cin >> menu.input;
 		switch (menu.input) {
+
 		case 1:
 			menu.listSize = record.trackId();
 			menu.listing(menu.listSize);
