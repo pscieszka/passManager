@@ -13,7 +13,7 @@ void List::listing(int listSize) {
     cout << "\n";
     for (int i = 1; i <= listSize*4; i++) {
         if (i % 4 == 1) {
-            cout << "\n\n";
+            cout << "\n";
         }
         getline(file, text);
         cout << text<<"\n";
@@ -24,7 +24,7 @@ void List::listing(int listSize) {
 
 void List::printMenu() {
 	cout << "\t\t\t\t\t\tMenu\n\n";
-	cout << "\t\t\t\t\t\t1.List account\n\t\t\t\t\t\t2.Add account\n\t\t\t\t\t\t3.Remove\n\t\t\t\t\t\t4.Exit\n\t\t\t\t\t\tInsert number: ";
+	cout << "\t\t\t\t\t\t1.List account\n\t\t\t\t\t\t2.Add account\n\t\t\t\t\t\t3.Remove\n\t\t\t\t\t\t4.Generate private key\n\t\t\t\t\t\t5.exit\n\t\t\t\t\t\tInsert number: ";
 }
 
 void List::fixIds() {
