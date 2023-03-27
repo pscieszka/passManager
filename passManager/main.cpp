@@ -18,8 +18,8 @@ int main()
 		std::string decryptedData;
 		RSA* rsa;
 		std::string encryptedData;
-    List menu;
-	Record record;
+		List menu;
+		Record record;
 	while (1) {
 		menu.printMenu();
 		cin >> menu.input;

@@ -8,7 +8,7 @@ public:
 
 	std::string filePath; // path to file with key
 
-	RSA* generateRSAKey(); //generate RSI key
+	RSA* generateRSAKey(); //generate RSA key
 
 	RSA* loadKeyFromFile(std::string filePath); // returns RSA* type variable extracted from .PEM file
 
