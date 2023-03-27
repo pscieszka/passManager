@@ -46,7 +46,7 @@ int main()
 		case 4:
 			
 			rsa = key.generateRSAKey();
-			void insertKeyToFile(RSA * rsa);
+			key.insertKeyToFile(rsa);
 
 			//cout << "Give pass";
 			//cin >> test;
