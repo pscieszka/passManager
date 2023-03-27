@@ -40,23 +40,30 @@ int main()
 			record.removeRecord(record.id);
 			menu.fixIds();
 			break;
-		case 5:
-			exit(0);
-			break;
 		case 4:
-			
+
 			rsa = key.generateRSAKey();
 			key.insertKeyToFile(rsa);
 
 			//cout << "Give pass";
 			//cin >> test;
 			//encryptedData = key.encryptData(test, rsa);
-			//cout << "Zaszyfrowany ci¹g znaków: " << encryptedData << endl;
 
 			//decryptedData = key.decryptData(encryptedData, rsa);
-			//cout << "Odszyfrowany ci¹g znaków: " << decryptedData << endl;
+			
 			RSA_free(rsa);
 			break;
+		case 5:
+			key.deleteKeyFile();
+			exit(0);
+			break;
+		case 6: // read from file test
+			cout << "path:";
+			cin >> key.filePath;
+			rsa = key.loadKeyFromFile(key.filePath);
+			key.insertKey(rsa);
+			break;
+
 		default:
 			cout << "Wrong number. Try again.\nInsert number: ";
 			break;

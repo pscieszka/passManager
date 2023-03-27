@@ -80,26 +80,44 @@ void key::insertKeyToFile(RSA* key) {
     PEM_write_RSAPrivateKey(file, key, NULL, NULL, 0, NULL, NULL);
     fclose(file);
 
-    std::cout << "Klucz RSA zapisano do pliku: " << "yourkey.PEM" << std::endl;
+    std::cout << "RSA key saved to file: " << "yourkey.PEM" << "\nThe key has been set as default, but it will be deleted when you exit the program.\nIf you want to access data saved during this session, save your key in a directory separate from the program.\n";
 }
 
-/*RSA* load_rsa_key_from_file(std::string file_path) {
-    std::ifstream file(file_path);
+RSA* key::loadKeyFromFile(std::string filePath) {
+    static char filePathChar[64];
+    strncpy_s(filePathChar, sizeof(filePathChar), filePath.c_str(), _TRUNCATE);
+    const char* filePathPtr = filePathChar;
+    FILE* file;
+    fopen_s(&file, filePathPtr, "r");
+
     if (!file) {
-        std::cerr << "Nie mo¿na otworzyæ pliku do odczytu klucza RSA: " << file_path << std::endl;
+        std::cerr << "Cannot open key file from: " << filePath << "\n";
         return nullptr;
     }
 
-    RSA* rsa_key = PEM_read_RSAPrivateKey(file, NULL, NULL, NULL);
-    if (!rsa_key) {
-        std::cerr << "Nie mo¿na odczytaæ klucza RSA z pliku: " << file_path << std::endl;
-        file.close();
+    RSA* rsaKey = PEM_read_RSAPrivateKey(file, NULL, NULL, NULL);
+    if (!rsaKey) {
+        std::cerr << "Cannot read key from file: " << filePath << "\n";
+        fclose(file);
         return nullptr;
     }
 
-    file.close();
+    fclose(file);
 
-    std::cout << "Klucz RSA odczytano z pliku: " << file_path << std::endl;
+    std::cout << "RSA key read from file: " << filePath << "\n";
 
-    return rsa_key;
-}*/
+    return rsaKey;
+}
+
+void key::deleteKeyFile() {
+    int result = remove("yourkey.PEM");
+    if (!result) 
+        std::cout << "key file deleted successfully.\n";
+    
+    else
+        std::cout << "Error deleting key file.\n";
+    
+}
+void key::insertKey(RSA* key) {
+    key = key::accesKey;
+}
