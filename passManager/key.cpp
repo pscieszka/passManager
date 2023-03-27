@@ -1,6 +1,8 @@
 #include <iostream>
 #include <openssl/rsa.h>
 #include <openssl/pem.h>
+#include <sstream>
+#include <fstream>
 #include "key.h"
 
 
@@ -69,17 +71,35 @@ std::string key::decryptData(const std::string& encryptedData, RSA* privateKey) 
     
     return decryptedData;
 }
-bool key::keyCheck() {
-    if (accesKey == NULL) {
-        return false;
+
+
+
+void key::insertKeyToFile(RSA* key) {
+    FILE* file;
+    fopen_s(&file,"yourkey.PEM", "w");
+    PEM_write_RSAPrivateKey(file, key, NULL, NULL, 0, NULL, NULL);
+    fclose(file);
+
+    std::cout << "Klucz RSA zapisano do pliku: " << "yourkey.PEM" << std::endl;
+}
+
+/*RSA* load_rsa_key_from_file(std::string file_path) {
+    std::ifstream file(file_path);
+    if (!file) {
+        std::cerr << "Nie mo¿na otworzyæ pliku do odczytu klucza RSA: " << file_path << std::endl;
+        return nullptr;
     }
-    else return true;
-}
 
-void key::insertPassword() {
+    RSA* rsa_key = PEM_read_RSAPrivateKey(file, NULL, NULL, NULL);
+    if (!rsa_key) {
+        std::cerr << "Nie mo¿na odczytaæ klucza RSA z pliku: " << file_path << std::endl;
+        file.close();
+        return nullptr;
+    }
 
-}
+    file.close();
 
-void key::insertKey(RSA* key) {
-    accesKey = key;
-}
+    std::cout << "Klucz RSA odczytano z pliku: " << file_path << std::endl;
+
+    return rsa_key;
+}*/
