@@ -32,6 +32,11 @@ int main()
 		case 2:
 			record.id = record.trackId();
 			record.insertRecord();
+			if (key.keyCheck()) {
+				cout << "jest klucz";//key.insertPassword();
+			}
+			else  cout << "nie ma klucza";
+			
 			break;
 		case 3:
 			cout << "input id: ";
@@ -46,15 +51,16 @@ int main()
 			
 			rsa = key.generateRSAKey();
 			RSA_print_fp(stdout, rsa, 0);
-			
-			cout << "Give pass";
-			cin >> test;
-			encryptedData = key.encryptData(test, rsa);
-			cout << "Zaszyfrowany ci¹g znaków: " << encryptedData << endl;
+			void insertKey(RSA * rsa);
 
-			decryptedData = key.decryptData(encryptedData, rsa);
-			cout << "Odszyfrowany ci¹g znaków: " << decryptedData << endl;
+			//cout << "Give pass";
+			//cin >> test;
+			//encryptedData = key.encryptData(test, rsa);
+			//cout << "Zaszyfrowany ci¹g znaków: " << encryptedData << endl;
 
+			//decryptedData = key.decryptData(encryptedData, rsa);
+			//cout << "Odszyfrowany ci¹g znaków: " << decryptedData << endl;
+			cout << "save this";
 			RSA_free(rsa);
 			break;
 		default:

@@ -1,8 +1,4 @@
 0
-ds
-ds
-ds
-1
-ds
-ds
-sd
+cos
+cos
+********

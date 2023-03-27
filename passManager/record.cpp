@@ -1,6 +1,7 @@
 #include <iostream>
 #include "record.h"
 #include <fstream>
+#include <ctime>
 #include <string>
 using namespace std;
 
@@ -11,8 +12,12 @@ void Record::insertRecord() {
     cin >> url;
     cout << "Enter login:" << endl;
     cin >> login;
-    cout << "Enter password:" << endl;
-    cin >> password;
+
+    srand(time(NULL));
+    int length = rand() % 8 + 8;
+    for (int i = 0; i < length;i++)
+        password += '*';
+    
     file << id << endl << url << endl << login << endl << password << endl; // ignorowanie spacji
     file.close();
 }

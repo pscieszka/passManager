@@ -69,4 +69,17 @@ std::string key::decryptData(const std::string& encryptedData, RSA* privateKey) 
     
     return decryptedData;
 }
+bool key::keyCheck() {
+    if (accesKey == NULL) {
+        return false;
+    }
+    else return true;
+}
 
+void key::insertPassword() {
+
+}
+
+void key::insertKey(RSA* key) {
+    accesKey = key;
+}
