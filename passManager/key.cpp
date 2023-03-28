@@ -121,3 +121,9 @@ void key::deleteKeyFile() {
 void key::insertKey(RSA* key) {
     key = key::accesKey;
 }
+bool key::isKeyInserted() {
+    if (key::accesKey == NULL)
+        return false;
+    else return true;
+    
+}
