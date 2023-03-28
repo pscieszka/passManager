@@ -29,16 +29,32 @@ int main()
 			menu.listSize = record.trackId();
 			menu.listing(menu.listSize);
 			break;
-		case 2:
-			record.id = record.trackId();
-			record.insertRecord();
+		case 2: 
+			/*rsa key  -> sha256, i potem hasla - > rsa i pozniej otwierasz sha256 sprawdza key i jak jest git
+			to jest git
+			rsa cout -> string, string-> sha256?
+			*/
+			bool acces = key.isKeyInserted();
+			if (acces) {
+				record.id = record.trackId();
+				record.insertRecord();
+				break;
+			}
+			else cout << "nie dla psa\n";
+
 		
 			break;
 		case 3:
-			cout << "input id: ";
-			cin >> record.id;
-			record.removeRecord(record.id);
-			menu.fixIds();
+			bool acces = key.isKeyInserted();
+			if (acces) {
+				cout << "input id: ";
+				cin >> record.id;
+				record.removeRecord(record.id);
+				menu.fixIds();
+				break;
+			}
+			else cout << "nie dla psa\n";
+
 			break;
 		case 4:
 
