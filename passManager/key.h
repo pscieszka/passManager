@@ -3,7 +3,7 @@
 class key
 {
 private:
-	RSA* accesKey; // user key to decrypt/encrypt
+	RSA* accesKey=NULL; // user key to decrypt/encrypt
 public:
 
 	std::string filePath; // path to file with key
@@ -21,5 +21,9 @@ public:
 	void insertKey(RSA* key); //input for private variable RSA* accesKey
 
 	void deleteKeyFile(); // deleting key file before closing program
+	
+	bool isKeyInserted();
+
+	std::string rsaToString(RSA* key);
 };
 
