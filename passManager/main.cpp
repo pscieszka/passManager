@@ -16,10 +16,11 @@ int main()
 		key key;
 		std:string test;
 		std::string decryptedData;
-		RSA* rsa;
+		RSA* rsa=NULL;
 		std::string encryptedData;
 		List menu;
 		Record record;
+		bool acces;
 	while (1) {
 		menu.printMenu();
 		cin >> menu.input;
@@ -30,22 +31,21 @@ int main()
 			menu.listing(menu.listSize);
 			break;
 		case 2: 
-			/*rsa key  -> sha256, i potem hasla - > rsa i pozniej otwierasz sha256 sprawdza key i jak jest git
-			to jest git
-			rsa cout -> string, string-> sha256?
-			*/
-			bool acces = key.isKeyInserted();
+			acces = key.isKeyInserted();
 			if (acces) {
 				record.id = record.trackId();
 				record.insertRecord();
+				cout << "Pasword:\n";
+				cin >> test;
+				key.encryptData(test,rsa);
 				break;
 			}
-			else cout << "nie dla psa\n";
+			else cout << "Please insert key\n";
 
 		
 			break;
 		case 3:
-			bool acces = key.isKeyInserted();
+			acces = key.isKeyInserted();
 			if (acces) {
 				cout << "input id: ";
 				cin >> record.id;
@@ -53,31 +53,31 @@ int main()
 				menu.fixIds();
 				break;
 			}
-			else cout << "nie dla psa\n";
+			else cout << "Please insert key\n";
 
 			break;
 		case 4:
 
 			rsa = key.generateRSAKey();
+			key.insertKey(rsa);
 			key.insertKeyToFile(rsa);
-
 			//cout << "Give pass";
 			//cin >> test;
 			//encryptedData = key.encryptData(test, rsa);
 
 			//decryptedData = key.decryptData(encryptedData, rsa);
 			
-			RSA_free(rsa);
+			
 			break;
-		case 5:
-			key.deleteKeyFile();
-			exit(0);
-			break;
-		case 6: // read from file test
+		case 5: // read from file test
 			cout << "path:";
 			cin >> key.filePath;
 			rsa = key.loadKeyFromFile(key.filePath);
 			key.insertKey(rsa);
+			break;
+		case 6:
+			key.deleteKeyFile();
+			exit(0);
 			break;
 
 		default:

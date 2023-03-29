@@ -18,7 +18,7 @@ void Record::insertRecord() {
     for (int i = 0; i < length;i++)
         password += '*';
     
-    file << id << endl << url << endl << login << endl << password << endl; // ignorowanie spacji
+    file << id << endl << url << endl << login<<endl << password << endl;
     file.close();
 }
 

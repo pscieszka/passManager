@@ -3,8 +3,11 @@
 class key
 {
 private:
-	RSA* accesKey=NULL; // user key to decrypt/encrypt
+	RSA* accessKey; // user key to decrypt/encrypt
 public:
+	key() {
+		accessKey = nullptr;
+	}
 
 	std::string filePath; // path to file with key
 
@@ -12,7 +15,7 @@ public:
 
 	RSA* loadKeyFromFile(std::string filePath); // returns RSA* type variable extracted from .PEM file
 
-	std::string encryptData(const std::string& data, RSA* publicKey); //encrypt
+	void encryptData(const std::string& data, RSA* publicKey); //encrypt
 
 	std::string decryptData(const std::string& encryptedData, RSA* privateKey); //decrypt
 
@@ -24,6 +27,13 @@ public:
 	
 	bool isKeyInserted();
 
-	std::string rsaToString(RSA* key);
+	std::string base64_decode(const std::string& encoded_string);
+
+	std::string base64_encode(const std::string& input);
+
+
+
+
+	//std::string rsaToString(RSA* key);
 };
 

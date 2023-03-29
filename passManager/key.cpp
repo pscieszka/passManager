@@ -1,6 +1,9 @@
 #include <iostream>
 #include <openssl/rsa.h>
 #include <openssl/pem.h>
+#include <openssl/bio.h>
+#include <openssl/buffer.h>
+#include <openssl/evp.h>
 #include <sstream>
 #include <fstream>
 #include "key.h"
@@ -23,54 +26,6 @@ RSA* key::generateRSAKey() {
     return rsa;
 }
 
-std::string key::encryptData(const std::string& data, RSA* publicKey) {
-    
-    int keyLength = RSA_size(publicKey);
-    char* encrypted = new char[keyLength];
-    memset(encrypted, 0, keyLength);
-
-    
-    int result = RSA_public_encrypt(data.length(), reinterpret_cast<const unsigned char*>(data.c_str()), reinterpret_cast<unsigned char*>(encrypted), publicKey, RSA_PKCS1_PADDING);
-    if (result == -1) {
-        
-        RSA_free(publicKey);
-        delete[] encrypted;
-        return "";
-    }
-
-    
-    std::string encryptedData(encrypted, result);
-
-    delete[] encrypted;
-
-    
-    return encryptedData;
-}
-
-std::string key::decryptData(const std::string& encryptedData, RSA* privateKey) {
-    
-    int keyLength = RSA_size(privateKey);
-    char* decrypted = new char[keyLength];
-    memset(decrypted, 0, keyLength);
-
-    
-    int result = RSA_private_decrypt(encryptedData.length(), reinterpret_cast<const unsigned char*>(encryptedData.c_str()), reinterpret_cast<unsigned char*>(decrypted), privateKey, RSA_PKCS1_PADDING);
-    if (result == -1) {
-        
-        RSA_free(privateKey);
-        delete[] decrypted;
-        return "";
-    }
-
-    
-    std::string decryptedData(decrypted, result);
-
-   
-    delete[] decrypted;
-
-    
-    return decryptedData;
-}
 
 
 
@@ -119,11 +74,12 @@ void key::deleteKeyFile() {
     
 }
 void key::insertKey(RSA* key) {
-    key = key::accesKey;
+    key::accessKey =  key;
 }
 bool key::isKeyInserted() {
-    if (key::accesKey == NULL)
+    if (key::accessKey == NULL)
         return false;
     else return true;
     
 }
+
