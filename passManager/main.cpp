@@ -5,6 +5,10 @@
 #include "record.h"
 #include "key.h"
 #include "password.h"
+#include <string>
+#include <fstream>
+#include <locale>
+#include <codecvt>
 
 
 using namespace std;
@@ -14,13 +18,19 @@ int main()
 {
 	cout << "\t\tGenerate private key before adding accounts. It will be required to decrypt passwords.\n\n";
 		key key;
-		std:string test;
-		std::string decryptedData;
+	    string test;
+		string test2,sum2;
+		string line;
+		string sum ="";
+		string decryptedData;
 		RSA* rsa=NULL;
+		RSA* rsa2;
 		std::string encryptedData;
 		List menu;
 		Record record;
 		bool acces;
+		fstream file;
+		
 	while (1) {
 		menu.printMenu();
 		cin >> menu.input;
@@ -37,7 +47,11 @@ int main()
 				record.insertRecord();
 				cout << "Pasword:\n";
 				cin >> test;
-				key.encryptData(test,rsa);
+				test2 = key.encodeRSA(test, rsa);
+				
+				file.open("pass.txt", std::ios::app);
+				file << test2;
+				file.close();
 				break;
 			}
 			else cout << "Please insert key\n";
@@ -59,6 +73,7 @@ int main()
 		case 4:
 
 			rsa = key.generateRSAKey();
+			rsa2 = rsa;
 			key.insertKey(rsa);
 			key.insertKeyToFile(rsa);
 			//cout << "Give pass";
@@ -79,10 +94,11 @@ int main()
 			key.deleteKeyFile();
 			exit(0);
 			break;
-
-		default:
-			cout << "Wrong number. Try again.\nInsert number: ";
+		case 7:
 			break;
+		//default:
+			//cout << "Wrong number. Try again.\nInsert number: ";
+			//break;
 		}
 	}
     return 0;

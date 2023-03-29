@@ -15,9 +15,9 @@ public:
 
 	RSA* loadKeyFromFile(std::string filePath); // returns RSA* type variable extracted from .PEM file
 
-	void encryptData(const std::string& data, RSA* publicKey); //encrypt
+	std::string encodeRSA(std::string message, RSA* rsa);
 
-	std::string decryptData(const std::string& encryptedData, RSA* privateKey); //decrypt
+	std::string decodeRSA(std::string encoded, RSA* rsa);
 
 	void insertKeyToFile(RSA* key); //saving key to file after generating
 
@@ -27,11 +27,7 @@ public:
 	
 	bool isKeyInserted();
 
-	std::string base64_decode(const std::string& encoded_string);
-
-	std::string base64_encode(const std::string& input);
-
-
+	
 
 
 	//std::string rsaToString(RSA* key);

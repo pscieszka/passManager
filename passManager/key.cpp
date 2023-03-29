@@ -7,6 +7,49 @@
 #include <sstream>
 #include <fstream>
 #include "key.h"
+#include <bitset>
+#include <iomanip>
+
+std::string key::encodeRSA(std::string message, RSA* rsa) {
+    int keySize = RSA_size(rsa);
+    int blockLength = keySize - 11; 
+    int messageLength = message.length();
+    int numBlocks = messageLength / blockLength + (messageLength % blockLength ? 1 : 0);
+    std::string encodedMessage;
+    encodedMessage.reserve(numBlocks * keySize);
+    for (int i = 0; i < numBlocks; i++) {
+        std::string block = message.substr(i * blockLength, blockLength);
+        unsigned char* encryptedBlock = new unsigned char[keySize];
+        int result = RSA_public_encrypt(block.length(), (const unsigned char*)block.c_str(), encryptedBlock, rsa, RSA_PKCS1_PADDING);
+        if (result != -1) {
+            encodedMessage.append((char*)encryptedBlock, keySize);
+        }
+        delete[] encryptedBlock;
+    }
+    
+    return encodedMessage;
+}
+
+
+std::string key::decodeRSA(std::string encoded, RSA* rsa) {
+    int keySize = RSA_size(rsa);
+    int blockLength = keySize;
+    int encodedLength = encoded.length();
+    int numBlocks = encodedLength / blockLength;
+    std::string decodedMessage;
+    decodedMessage.reserve(numBlocks * (keySize - 11));
+    for (int i = 0; i < numBlocks; i++) {
+        std::string block = encoded.substr(i * blockLength, blockLength);
+        unsigned char* decryptedBlock = new unsigned char[keySize];
+        int result = RSA_private_decrypt(block.length(), (const unsigned char*)block.c_str(), decryptedBlock, rsa, RSA_PKCS1_PADDING);
+        if (result != -1) {
+            decodedMessage.append((char*)decryptedBlock, result);
+        }
+        delete[] decryptedBlock;
+    }
+    return decodedMessage;
+}
+
 
 
 RSA* key::generateRSAKey() {
@@ -25,8 +68,6 @@ RSA* key::generateRSAKey() {
     BN_free(bn);
     return rsa;
 }
-
-
 
 
 void key::insertKeyToFile(RSA* key) {
