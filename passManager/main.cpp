@@ -47,11 +47,11 @@ int main()
 				record.insertRecord();
 				cout << "Pasword:\n";
 				cin >> test;
-				test2 = key.encodeRSA(test, rsa);
+				//test2 = key.encodeRSA(test, rsa);
 				
-				file.open("pass.txt", std::ios::app);
-				file << test2;
-				file.close();
+				//file.open("pass.txt", std::ios::app);
+				//file << test2;
+				//file.close();
 				break;
 			}
 			else cout << "Please insert key\n";
@@ -95,6 +95,30 @@ int main()
 			exit(0);
 			break;
 		case 7:
+			rsa = key.generateRSAKey();
+			if (!rsa) {
+				std::cerr << "Cannot generate RSA key\n";
+				return -1;
+			}
+
+			
+			std::string message = "dupa";
+			std::string encryptedMessage = key.encryptRSA(message, rsa);
+
+			
+			key.saveEncryptedMessageToFile("encrypted_message.dat", encryptedMessage);
+
+			
+			std::string loadedEncryptedMessage = key.loadEncryptedMessageFromFile("encrypted_message.dat");
+
+			
+			std::string decryptedMessage = key.decryptRSA(loadedEncryptedMessage, rsa);
+
+			
+			std::cout << "Original message: " << message << std::endl;
+			std::cout << "Encrypted message: " << encryptedMessage << std::endl;
+			std::cout << "Loaded encrypted message: " << loadedEncryptedMessage << std::endl;
+			std::cout << "Decrypted message: " << decryptedMessage << std::endl;
 			break;
 		//default:
 			//cout << "Wrong number. Try again.\nInsert number: ";

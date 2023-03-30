@@ -15,9 +15,14 @@ public:
 
 	RSA* loadKeyFromFile(std::string filePath); // returns RSA* type variable extracted from .PEM file
 
-	std::string encodeRSA(std::string message, RSA* rsa);
+	std::string encryptRSA(std::string message, RSA* rsa);
 
-	std::string decodeRSA(std::string encoded, RSA* rsa);
+	std::string decryptRSA(std::string encoded, RSA* rsa);
+
+
+	std::string loadEncryptedMessageFromFile(std::string fileName);
+
+	void saveEncryptedMessageToFile(std::string fileName, std::string encryptedMessage);
 
 	void insertKeyToFile(RSA* key); //saving key to file after generating
 

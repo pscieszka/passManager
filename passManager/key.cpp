@@ -10,45 +10,81 @@
 #include <bitset>
 #include <iomanip>
 
-std::string key::encodeRSA(std::string message, RSA* rsa) {
-    int keySize = RSA_size(rsa);
-    int blockLength = keySize - 11; 
-    int messageLength = message.length();
-    int numBlocks = messageLength / blockLength + (messageLength % blockLength ? 1 : 0);
-    std::string encodedMessage;
-    encodedMessage.reserve(numBlocks * keySize);
-    for (int i = 0; i < numBlocks; i++) {
-        std::string block = message.substr(i * blockLength, blockLength);
-        unsigned char* encryptedBlock = new unsigned char[keySize];
-        int result = RSA_public_encrypt(block.length(), (const unsigned char*)block.c_str(), encryptedBlock, rsa, RSA_PKCS1_PADDING);
-        if (result != -1) {
-            encodedMessage.append((char*)encryptedBlock, keySize);
-        }
-        delete[] encryptedBlock;
+std::string key::encryptRSA(std::string message, RSA* key) {
+    std::string result;
+    int keySize = RSA_size(key);
+    char* encrypted = new char[keySize];
+    int length = RSA_public_encrypt(message.size() + 1, (unsigned char*)message.c_str(), (unsigned char*)encrypted, key, RSA_PKCS1_OAEP_PADDING);
+    if (length != -1) {
+        result = std::string(encrypted, length);
     }
-    
-    return encodedMessage;
+    else {
+        std::cerr << "Error encrypting message with RSA.\n";
+    }
+    delete[] encrypted;
+    return result;
 }
 
 
-std::string key::decodeRSA(std::string encoded, RSA* rsa) {
-    int keySize = RSA_size(rsa);
-    int blockLength = keySize;
-    int encodedLength = encoded.length();
-    int numBlocks = encodedLength / blockLength;
-    std::string decodedMessage;
-    decodedMessage.reserve(numBlocks * (keySize - 11));
-    for (int i = 0; i < numBlocks; i++) {
-        std::string block = encoded.substr(i * blockLength, blockLength);
-        unsigned char* decryptedBlock = new unsigned char[keySize];
-        int result = RSA_private_decrypt(block.length(), (const unsigned char*)block.c_str(), decryptedBlock, rsa, RSA_PKCS1_PADDING);
-        if (result != -1) {
-            decodedMessage.append((char*)decryptedBlock, result);
-        }
-        delete[] decryptedBlock;
+std::string key::decryptRSA(std::string message, RSA* key) {
+    std::string result;
+    int keySize = RSA_size(key);
+    char* decrypted = new char[keySize];
+    int length = RSA_private_decrypt(keySize, (unsigned char*)message.c_str(), (unsigned char*)decrypted, key, RSA_PKCS1_OAEP_PADDING);
+    if (length != -1) {
+        result = std::string(decrypted, length);
     }
-    return decodedMessage;
+    else {
+        std::cerr << "Error decrypting message with RSA.\n";
+    }
+    delete[] decrypted;
+    return result;
 }
+
+void key::saveEncryptedMessageToFile(std::string fileName, std::string encryptedMessage) {
+    std::ofstream outFile(fileName, std::ios::out | std::ios::binary);
+    if (outFile) {
+        outFile.write(encryptedMessage.c_str(), encryptedMessage.size());
+        std::cout << "Encrypted message saved to file: " << fileName << std::endl;
+    }
+    else {
+        std::cerr << "Error saving encrypted message to file: " << fileName << std::endl;
+    }
+    outFile.close();
+}
+
+std::string key::loadEncryptedMessageFromFile(std::string fileName) {
+    std::ifstream inFile(fileName, std::ios::in | std::ios::binary);
+    std::string encryptedMessage;
+    if (inFile) {
+        // get length of file
+        inFile.seekg(0, std::ios::end);
+        size_t length = inFile.tellg();
+        inFile.seekg(0, std::ios::beg);
+
+        // read data
+        encryptedMessage.resize(length);
+        inFile.read(&encryptedMessage[0], length);
+        std::cout << "Encrypted message read from file: " << fileName << std::endl;
+    }
+    else {
+        std::cerr << "Error loading encrypted message from file: " << fileName << std::endl;
+    }
+    inFile.close();
+    return encryptedMessage;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
