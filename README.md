@@ -27,4 +27,4 @@ In addition to RSA encryption, the Password Manager project is also working on a
 # Files with data after use
 
 yourkey.PEM
-![]([image.jpg](https://github.com/pscieszka/passManager/blob/master/resources/key.png?raw=true))
+![](https://github.com/pscieszka/passManager/blob/master/resources/key.png)
