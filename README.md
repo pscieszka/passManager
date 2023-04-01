@@ -28,16 +28,16 @@ In addition to RSA encryption, the Password Manager project is also working on a
 
 yourkey.PEM
 
-<img src="https://github.com/pscieszka/passManager/blob/master/resources/key.png" alt= “” width="800" height="800">
+<img src="https://github.com/pscieszka/passManager/blob/master/resources/key.png" alt= “” width="800" height="600">
 
 data.txt
 
-<img src="https://github.com/pscieszka/passManager/blob/master/resources/data.png" alt= “” width="800" height="800">
+<img src="https://github.com/pscieszka/passManager/blob/master/resources/data.png" alt= “” width="800" height="600">
 
 
 encrypted_message.dat
 
-<img src="https://github.com/pscieszka/passManager/blob/master/resources/passwords.PNG" alt= “” width="800" height="800">
+<img src="https://github.com/pscieszka/passManager/blob/master/resources/passwords.PNG" alt= “” width="800" height="600">
 
 # To do list
 
