@@ -4,7 +4,7 @@ Password Manager is a project that securely stores and manages passwords using R
 
 In addition to RSA encryption, the Password Manager project is also working on adding an extra layer of SHA256 encryption to further enhance the security of the stored passwords. This document provides an overview of the project, its features, and its usage.
 
- #Simple example of how to use the Password Manager:
+ # Simple example of how to use the Password Manager:
  
 1. To generate an RSA key for the first time, select option 4 from the menu. The key will be saved in a file named "yourkey.PEM" inside the program files.
 
@@ -15,4 +15,11 @@ In addition to RSA encryption, the Password Manager project is also working on a
 4. When the program is closed, all keys and password strings will be destroyed. As a result, two files will be created: "data.txt" with the list of items and "encrypted_message.dat" with the encrypted passwords.
 
 ![alt-text](https://github.com/pscieszka/passManager/blob/master/resources/Animation.gif)
+# Reopening program
+
+1. To retrieve the stored passwords, we need to select the "Read Key from File" option and provide the file path where the RSA key are stored on our computer.
+2. Once the key is loaded, we can choose the "Show Password" option to select the password that we want to decrypt.
+
+3. The password will be displayed in its decrypted form, without any encryption.
+
 ![alt-text](https://github.com/pscieszka/passManager/blob/master/resources/Animation2.gif)
