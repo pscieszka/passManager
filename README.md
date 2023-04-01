@@ -31,6 +31,11 @@ yourkey.PEM
 <img src="https://github.com/pscieszka/passManager/blob/master/resources/key.png" alt= “” width="800" height="800">
 
 data.txt
-![](https://github.com/pscieszka/passManager/blob/master/resources/data.png)
+
+<img src="https://github.com/pscieszka/passManager/blob/master/resources/data.png" alt= “” width="800" height="800">
+
+
 encrypted_message.dat
-![](https://github.com/pscieszka/passManager/blob/master/resources/passwords.png)
+
+<img src="https://github.com/pscieszka/passManager/blob/master/resources/key.png" alt= “” width="800" height="800">
+
