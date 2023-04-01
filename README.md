@@ -23,3 +23,8 @@ In addition to RSA encryption, the Password Manager project is also working on a
 3. The password will be displayed in its decrypted form, without any encryption.
 
 ![alt-text](https://github.com/pscieszka/passManager/blob/master/resources/Animation2.gif)
+
+# Files with data after use
+
+yourkey.PEM
+![]([image.jpg](https://github.com/pscieszka/passManager/blob/master/resources/key.png?raw=true))
