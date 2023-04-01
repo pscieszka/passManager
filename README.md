@@ -37,5 +37,6 @@ data.txt
 
 encrypted_message.dat
 
-<img src="https://github.com/pscieszka/passManager/blob/master/resources/key.png" alt= “” width="800" height="800">
+<img src="https://github.com/pscieszka/passManager/blob/master/resources/passwords.png" alt= “” width="800" height="800">
 
+# To do list
