@@ -27,7 +27,9 @@ In addition to RSA encryption, the Password Manager project is also working on a
 # Files with data after use
 
 yourkey.PEM
-<img src="https://github.com/pscieszka/passManager/blob/master/resources/key.png" alt= “” width="300" height="300">
+
+<img src="https://github.com/pscieszka/passManager/blob/master/resources/key.png" alt= “” width="800" height="800">
+
 data.txt
 ![](https://github.com/pscieszka/passManager/blob/master/resources/data.png)
 encrypted_message.dat
