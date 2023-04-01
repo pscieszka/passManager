@@ -28,3 +28,7 @@ In addition to RSA encryption, the Password Manager project is also working on a
 
 yourkey.PEM
 ![](https://github.com/pscieszka/passManager/blob/master/resources/key.png)
+data.txt
+![](https://github.com/pscieszka/passManager/blob/master/resources/data.png)
+encrypted_message.dat
+![](https://github.com/pscieszka/passManager/blob/master/resources/passwords.png)
