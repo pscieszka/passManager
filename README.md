@@ -37,6 +37,16 @@ data.txt
 
 encrypted_message.dat
 
-<img src="https://github.com/pscieszka/passManager/blob/master/resources/passwords.png" alt= “” width="800" height="800">
+<img src="https://github.com/pscieszka/passManager/blob/master/resources/passwords.PNG" alt= “” width="800" height="800">
 
 # To do list
+
+- [ ] Add SHA256 encryption
+
+- [ ] Improve code readability
+
+- [ ] Optimize performance
+
+- [ ] Add the ability to remove items from the password list
+
+- [ ] Add safeguards against inputting incorrect data
