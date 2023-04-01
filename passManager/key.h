@@ -20,9 +20,9 @@ public:
 	std::string decryptRSA(std::string encoded, RSA* rsa);
 
 
-	std::string loadEncryptedMessageFromFile(std::string fileName);
+	std::string loadEncryptedMessageFromFile(std::string fileName, int id);
 
-	void saveEncryptedMessageToFile(std::string fileName, std::string encryptedMessage);
+	void saveEncryptedMessageToFile(std::string fileName, std::string encryptedMessage,int ID);
 
 	void insertKeyToFile(RSA* key); //saving key to file after generating
 

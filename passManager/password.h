@@ -3,8 +3,8 @@
 class password {
 public:
     std::string generate_salt(int length);
-    std::string hash_password(std::string password, std::string salt);
-    std::string hash_rsa(RSA* rsa, std::string salt);
-
+    void hash_rsa(RSA* rsa, const std::string& salt);
+    bool verify_rsa(RSA* rsa, const std::string& filename);
+    void clearSha(const std::string& filename);
 };
 

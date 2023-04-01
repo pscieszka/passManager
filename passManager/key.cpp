@@ -41,31 +41,45 @@ std::string key::decryptRSA(std::string message, RSA* key) {
     return result;
 }
 
-void key::saveEncryptedMessageToFile(std::string fileName, std::string encryptedMessage) {
-    std::ofstream outFile(fileName, std::ios::out | std::ios::binary);
+void key::saveEncryptedMessageToFile(std::string fileName, std::string encryptedMessage, int id) {
+    std::ofstream outFile(fileName, std::ios::out | std::ios::app | std::ios::binary);
     if (outFile) {
-        outFile.write(encryptedMessage.c_str(), encryptedMessage.size());
-        std::cout << "Encrypted message saved to file: " << fileName << std::endl;
+        outFile << "ID NUMBER = " << id << "\n" << encryptedMessage << std::endl;
+        outFile << "END OF MESSAGE WITH ID = " << id << "\n\n";
+        std::cout << "Encrypted message with ID " << id << " saved to file: " << fileName << std::endl;
     }
     else {
-        std::cerr << "Error saving encrypted message to file: " << fileName << std::endl;
+        std::cerr << "Error saving encrypted message with ID " << id << " to file: " << fileName << std::endl;
     }
     outFile.close();
 }
-
-std::string key::loadEncryptedMessageFromFile(std::string fileName) {
+std::string key::loadEncryptedMessageFromFile(std::string fileName, int id) {
     std::ifstream inFile(fileName, std::ios::in | std::ios::binary);
     std::string encryptedMessage;
     if (inFile) {
-        // get length of file
-        inFile.seekg(0, std::ios::end);
-        size_t length = inFile.tellg();
-        inFile.seekg(0, std::ios::beg);
-
-        // read data
-        encryptedMessage.resize(length);
-        inFile.read(&encryptedMessage[0], length);
-        std::cout << "Encrypted message read from file: " << fileName << std::endl;
+        std::string line;
+        int currentId = -1;
+        bool found = false;
+        while (std::getline(inFile, line)) {
+            if (line.find("ID NUMBER = ") != std::string::npos) {
+                currentId = std::stoi(line.substr(line.find("=") + 1));
+                if (currentId == id) {
+                    found = true;
+                }
+            }
+            else {
+                if (found && line.find("END OF MESSAGE WITH ID = ") == std::string::npos) {
+                    encryptedMessage += line;
+                    encryptedMessage += "\n";
+                }
+            }
+        }
+        if (found) {
+            std::cout << "Encrypted message with ID " << id << " read from file: " << fileName << std::endl;
+        }
+        else {
+            std::cerr << "Could not find encrypted message with ID " << id << " in file: " << fileName << std::endl;
+        }
     }
     else {
         std::cerr << "Error loading encrypted message from file: " << fileName << std::endl;
@@ -73,19 +87,6 @@ std::string key::loadEncryptedMessageFromFile(std::string fileName) {
     inFile.close();
     return encryptedMessage;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 RSA* key::generateRSAKey() {

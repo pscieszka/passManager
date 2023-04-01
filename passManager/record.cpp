@@ -19,6 +19,7 @@ void Record::insertRecord() {
         password += '*';
     
     file << id << endl << url << endl << login<<endl << password << endl;
+    password = "";
     file.close();
 }
 

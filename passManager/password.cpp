@@ -6,6 +6,7 @@
 #include <iomanip>
 #include <random>
 #include <sstream>
+#include <fstream>
 #include "password.h"
 
 
@@ -21,23 +22,81 @@
         return salt;
     }
 
-    std::string password::hash_password(std::string password, std::string salt)
+    void password::hash_rsa(RSA* rsa, const std::string& salt)
     {
         const int hash_length = 32;
         unsigned char hash[hash_length];
-        const char* salted_password = (password + salt).c_str();
+
+        BIO* bio = BIO_new(BIO_s_mem());
+        PEM_write_bio_RSAPrivateKey(bio, rsa, NULL, NULL, 0, NULL, NULL);
+        char* key_buffer;
+        long key_length = BIO_get_mem_data(bio, &key_buffer);
+
+        std::string salted_key(key_buffer, key_length);
+        salted_key += salt;
+
         EVP_MD_CTX* context = EVP_MD_CTX_new();
         EVP_DigestInit_ex(context, EVP_sha256(), NULL);
-        EVP_DigestUpdate(context, salted_password, strlen(salted_password));
-        EVP_DigestUpdate(context, salted_password, strlen(salted_password));
+        EVP_DigestUpdate(context, salted_key.c_str(), salted_key.length());
         EVP_DigestFinal_ex(context, hash, NULL);
         EVP_MD_CTX_free(context);
 
-        std::stringstream ss;
-        for (int i = 0; i < hash_length; ++i)
-            ss << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(hash[i]);
-
-       return ss.str();
+        std::ofstream outfile("sha.dat", std::ios::out | std::ios::binary);
+        outfile.write(reinterpret_cast<const char*>(&hash_length), sizeof(hash_length));
+        outfile.write(salted_key.c_str(), salted_key.length());
+        outfile.write(reinterpret_cast<const char*>(hash), hash_length);
+        outfile.close();
     }
+
+    bool password::verify_rsa(RSA* rsa, const std::string& filename)
+    {
+        const int hash_length = 32;
+        unsigned char hash[hash_length];
+
+        BIO* bio = BIO_new(BIO_s_mem());
+        PEM_write_bio_RSAPrivateKey(bio, rsa, NULL, NULL, 0, NULL, NULL);
+        char* key_buffer;
+        long key_length = BIO_get_mem_data(bio, &key_buffer);
+
+        EVP_MD_CTX* context = EVP_MD_CTX_new();
+        EVP_DigestInit_ex(context, EVP_sha256(), NULL);
+        EVP_DigestUpdate(context, key_buffer, key_length);
+        EVP_MD_CTX_free(context);
+
+        std::ifstream infile(filename, std::ios::binary);
+        if (!infile) {
+            return false;
+        }
+        int stored_hash_length;
+        infile.read(reinterpret_cast<char*>(&stored_hash_length), sizeof(stored_hash_length));
+        if (stored_hash_length != hash_length) {
+            return false;
+        }
+        std::string stored_data(key_length + 32, '\0');
+        infile.read(&stored_data[0], stored_data.size());
+        infile.close();
+
+        context = EVP_MD_CTX_new();
+        EVP_DigestInit_ex(context, EVP_sha256(), NULL);
+        EVP_DigestUpdate(context, stored_data.c_str(), key_length + 32);
+        EVP_DigestFinal_ex(context, hash, NULL);
+        EVP_MD_CTX_free(context);
+
+        if (memcmp(key_buffer, stored_data.c_str(), key_length) != 0 ||
+            memcmp(hash, stored_data.c_str() + key_length, hash_length) != 0) {
+            return false;
+        }
+
+        return true;
+    }
+
+
+    void password::clearSha(const std::string& filename) {
+        std::ofstream outfile(filename, std::ios::out | std::ios::trunc);
+        outfile.close();
+    }
+
+
+
 
    
